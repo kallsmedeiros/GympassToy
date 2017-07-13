@@ -1,0 +1,32 @@
+<div class="page-header">
+  <%= link_to users_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_user_path(@user), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show user</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Name:</dt>
+  <dd><%= @user.name %></dd>
+
+  <dt>Kind:</dt>
+  <dd><%= @user.kind %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= @user.email %></dd>
+
+  <dt>Password:</dt>
+  <dd><%= @user.password %></dd>
+
+  <dt>Work location:</dt>
+  <dd><%= @user.work_location.try(:address) %></dd>
+
+  <dt>Home location:</dt>
+  <dd><%= @user.home_location.try(:address) %></dd>
+
+</dl>

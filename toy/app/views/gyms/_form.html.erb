@@ -1,0 +1,65 @@
+<%= form_for(@gym, html: { class: "form-horizontal", role: "form" }) do |f| %>
+<%#raise @online.inspect%>
+<%#format.html { redirect_to :controller => 'home', :action => 'index' } if @online.eql? nil%>
+  <% if @gym.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@gym.errors.count, "error") %> prohibited this gym from being saved:</h4>
+
+      <ul>
+      <% @gym.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :location_id, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%#= f.text_field :location, class: "form-control", id: "txtautocomplete" %>
+      <input id="txtautocomplete" class="form-control" name="gym[location]" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :manager, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= collection_select(:gym, :manager_id, User.all.where("kind = ?", 'manager'), :id, :name, prompt: true)%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :opening, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.time_select :opening, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :closing, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.time_select :closing, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&signedin=true&libraries=places&sensor=false&key=AIzaSyCxRjjdMVyTPuNxeNeDIWSKl7bjLCBfDHM"></script>
+
+<script>
+
+google.maps.event.addDomListener(window, 'load', intilize);
+  function intilize() {
+  var autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtautocomplete'));
+  google.maps.event.addListener(autocomplete)
+}
+</script>

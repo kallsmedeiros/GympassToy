@@ -1,0 +1,43 @@
+<div class="page-header">
+  <%= link_to new_gym_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Gym
+  <% end %>
+  <h1>Listing gyms</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Manager</th>
+            <th>Opening</th>
+            <th>Closing</th>
+            <th></th>
+            <% if @online.eql? nil or @online.try(:kind).eql? 'client'%>
+            <%else%>
+              <th></th>
+              <th></th>
+            <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @gyms) do |gym| %>
+            <td><%= gym.name %></td>
+            <td><%= gym.location.try(:address) %></td>
+            <td><%= gym.manager.try(:name) %></td>
+            <td><%= gym.opening.strftime("%H:%M") %></td>
+            <td><%= gym.closing.strftime("%H:%M") %></td>
+            <td><%= link_to 'Show', gym %></td>
+            <% if @online.eql? nil or @online.try(:kind).eql? 'client'%>
+            <%else%>
+             <td><%= link_to 'Edit', edit_gym_path(gym)%></td>
+             <td><%= link_to 'Destroy', gym, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+           <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
